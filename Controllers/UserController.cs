@@ -38,6 +38,14 @@ namespace Techprimelab.Controllers
 				return StatusCode(StatusCodes.Status400BadRequest, ex);
 			}
 		}
+
+		[HttpPost]
+		[Route("Logout")]
+		[Authorize]
+		public IActionResult Logout()
+		{
+			return Ok(new { message = "Logout successful" });
+		}
 	}
 }
 

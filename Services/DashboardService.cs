@@ -1,37 +1,39 @@
-﻿using Techprimelab.Repository.Interfaces;
-using Techprimelab.Services.Interfaces;
+﻿	using Techprimelab.Models.DTO;
+	using Techprimelab.Repository.Interfaces;
+	using Techprimelab.Services.Interfaces;
 
-namespace Techprimelab.Services
-{
-	public class DashboardService : IDashboardService
+	namespace Techprimelab.Services
 	{
-
-		private readonly IDashboardRepository _dashboardRepository;
-
-        public DashboardService(IDashboardRepository dashboardRepository)
-        {
-            _dashboardRepository = dashboardRepository;
-        }
-
-        public async Task<int> GetTotalProjectsCountAsync()
+		public class DashboardService : IDashboardService
 		{
-			return await _dashboardRepository.GetTotalProjectsCountAsync();
-		}
+
+			private readonly IDashboardRepository _dashboardRepository;
+
+			public DashboardService(IDashboardRepository dashboardRepository)
+			{
+				_dashboardRepository = dashboardRepository;
+			}
+
+			public async Task<int> GetTotalProjectsCountAsync()
+			{
+				return await _dashboardRepository.GetTotalProjectsCountAsync();
+			}
 		
 
-		public async Task<int> GetCountProjectsByStatusNameAsync(string statusName)
-		{
-			return await _dashboardRepository.GetCountProjectsByStatusNameAsync(statusName);
-		}
+			public async Task<int> GetCountProjectsByStatusNameAsync(string statusName)
+			{
+				return await _dashboardRepository.GetCountProjectsByStatusNameAsync(statusName);
+			}
 
-		public async Task<int> GetDelayedProjectsCountAsync()
-		{
-			return await _dashboardRepository.GetDelayedProjectsCountAsync();
-		}
+			public async Task<int> GetDelayedProjectsCountAsync()
+			{
+				return await _dashboardRepository.GetDelayedProjectsCountAsync();
+			}
 
-		public async Task<object> GetChartDataAsync()
-		{
-			return await _dashboardRepository.GetChartDataAsync();
+		
+			public async Task<List<DepartmentSuccessDto>> GetChartDataAsync()
+			{
+				return await _dashboardRepository.GetChartDataAsync();
+			}
 		}
 	}
-}

@@ -1,5 +1,6 @@
 ﻿using Techprimelab.Models;
 
+
 namespace Techprimelab.Repository.Interfaces
 {
 	public interface IProjectRepository

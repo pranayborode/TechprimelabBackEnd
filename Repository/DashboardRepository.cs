@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Techprimelab.Data;
+using Techprimelab.Models.DTO;
 using Techprimelab.Repository.Interfaces;
 
 namespace Techprimelab.Repository
@@ -42,16 +43,34 @@ namespace Techprimelab.Repository
 				.StatusId && p.EndDate < DateTime.Now);
 		}
 
-		public async Task<object> GetChartDataAsync()
+		public async Task<List<DepartmentSuccessDto>> GetChartDataAsync()
 		{
-			return await _context.Projects
-				.GroupBy(p => p.DepartmentId)
-				.Select(g => new
-				{
-					Department = g.Key,
-					TotalProjects = g.Count(),
-					ClosedProjects = g.Count(p => p.StatusId == _context.Statuses.SingleOrDefault(s => s.StatusName == "Closed").StatusId)
-				}).ToListAsync();
+			var closedStatusId = await _context.Statuses
+	   .Where(s => s.StatusName == "Closed")
+	   .Select(s => s.StatusId)
+	   .SingleOrDefaultAsync();
+
+			var departmentSuccessData = await _context.Projects
+		.GroupBy(p => p.DepartmentId)
+		.Select(g => new
+		{
+			DepartmentId = g.Key,
+			TotalProjects = g.Count(),
+			TotalProjectsClosed = g.Count(p => p.StatusId == closedStatusId),
+			SuccessPercentage = g.Count(p => p.StatusId == closedStatusId) * 100.0 / g.Count()
+		})
+		.Join(_context.Departments, 
+			projectGroup => projectGroup.DepartmentId,
+			department => department.DepartmentId, 
+			(projectGroup, department) => new DepartmentSuccessDto
+			{
+				DepartmentName = department.DepartmentName,
+				TotalProjects = projectGroup.TotalProjects,
+				TotalProjectsClosed = projectGroup.TotalProjectsClosed,
+				SuccessPercentage = projectGroup.SuccessPercentage
+			})
+		.ToListAsync();
+			return departmentSuccessData;
 		}
 
 	}

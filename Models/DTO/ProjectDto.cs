@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Techprimelab.Models
+namespace Techprimelab.Models.DTO
 {
-	public class Project
+	public class ProjectDto
 	{
-		[Key]
 		public int ProjectId { get; set; }
 
 		public string ProjectName { get; set; }
@@ -22,7 +20,7 @@ namespace Techprimelab.Models
 
 		public int DepartmentId { get; set; }
 
-		public int LocationId { get; set;}
+		public int LocationId { get; set; }
 
 		public DateTime StartDate { get; set; }
 
@@ -30,7 +28,7 @@ namespace Techprimelab.Models
 
 		public int StatusId { get; set; }
 
-		/*[ForeignKey("ReasonId")]
+		[ForeignKey("ReasonId")]
 		public Reason Reason { get; set; }
 
 		[ForeignKey("TypeId")]
@@ -52,6 +50,6 @@ namespace Techprimelab.Models
 		public Location Location { get; set; }
 
 		[ForeignKey("StatusId")]
-		public Status Status { get; set; }*/
+		public Status Status { get; set; }
 	}
 }

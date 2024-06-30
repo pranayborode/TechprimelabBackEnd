@@ -1,4 +1,6 @@
-﻿namespace Techprimelab.Repository.Interfaces
+﻿using Techprimelab.Models.DTO;
+
+namespace Techprimelab.Repository.Interfaces
 {
 	public interface IDashboardRepository
 	{
@@ -6,7 +8,7 @@
 		Task<int> GetCountProjectsByStatusNameAsync(string statusName);
 		Task<int> GetDelayedProjectsCountAsync();
 
-		Task<object> GetChartDataAsync();
+		Task<List<DepartmentSuccessDto>> GetChartDataAsync();
 
 	}
 }

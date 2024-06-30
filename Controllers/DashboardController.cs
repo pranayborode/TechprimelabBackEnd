@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Techprimelab.Models.DTO;
 using Techprimelab.Services.Interfaces;
 
 namespace Techprimelab.Controllers
@@ -61,12 +62,14 @@ namespace Techprimelab.Controllers
 			}
 		}
 
+		
+
 		[HttpGet]
 		[Route("ChartData")]
-		public async Task<IActionResult> GetChartData()
+		public async Task<ActionResult<IEnumerable<DepartmentSuccessDto>>> GetDepartmentSuccess()
 		{
-			var data = await _dashboardService.GetChartDataAsync();
-			return Ok(data);
+			var departmentSuccessData = await _dashboardService.GetChartDataAsync();
+			return Ok(departmentSuccessData);
 		}
 
 	}

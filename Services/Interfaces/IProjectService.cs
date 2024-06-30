@@ -1,4 +1,5 @@
 ﻿using Techprimelab.Models;
+using Techprimelab.Models.DTO;
 
 namespace Techprimelab.Services.Interfaces
 {
