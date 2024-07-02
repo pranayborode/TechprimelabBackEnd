@@ -51,7 +51,7 @@ namespace Techprimelab.Controllers
 		{
 			try
 			{
-				var result = _projectService.GetAllProjects();
+				var result = _projectService.GetAllProjectsDto();
 				return new ObjectResult(result);
 
 			} catch (Exception ex)

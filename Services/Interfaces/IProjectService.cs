@@ -21,5 +21,7 @@ namespace Techprimelab.Services.Interfaces
 
 		IEnumerable<Reason> getAllReason();
 
+		public IEnumerable<ProjectDto> GetAllProjectsDto();
+
 	}
 }

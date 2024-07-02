@@ -1,4 +1,5 @@
 ﻿using Techprimelab.Models;
+using Techprimelab.Models.DTO;
 using Techprimelab.Repository.Interfaces;
 using Techprimelab.Services.Interfaces;
 
@@ -74,6 +75,11 @@ namespace Techprimelab.Services
 		public IEnumerable<Types> GetAllTypes()
 		{
 			return _projectRepository.GetAllTypes();
+		}
+
+		public IEnumerable<ProjectDto> GetAllProjectsDto()
+		{
+			return _projectRepository.GetAllProjectsDto();
 		}
 	}
 }

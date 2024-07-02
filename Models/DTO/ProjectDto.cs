@@ -9,47 +9,31 @@ namespace Techprimelab.Models.DTO
 		public string ProjectName { get; set; }
 
 		public int ReasonId { get; set; }
+		public string ReasonName { get; set; }
 
 		public int TypeId { get; set; }
+		public string TypeName { get; set; }
 
 		public int DivisionId { get; set; }
+		public string DivisionName { get; set; }
 
 		public int CategoryId { get; set; }
+		public string CategoryName { get; set; }
 
 		public int PriorityId { get; set; }
+		public string PriorityName { get; set; }
 
 		public int DepartmentId { get; set; }
+		public string DepartmentName { get; set; }
 
 		public int LocationId { get; set; }
+		public string LocationName { get; set; }
 
 		public DateTime StartDate { get; set; }
-
 		public DateTime EndDate { get; set; }
 
 		public int StatusId { get; set; }
+		public string StatusName { get; set; }
 
-		[ForeignKey("ReasonId")]
-		public Reason Reason { get; set; }
-
-		[ForeignKey("TypeId")]
-		public Types Types { get; set; }
-
-		[ForeignKey("DivisionId")]
-		public Division Division { get; set; }
-
-		[ForeignKey("CategoryId")]
-		public Category Category { get; set; }
-
-		[ForeignKey("PriorityId")]
-		public Priority Priority { get; set; }
-
-		[ForeignKey("DepartmentId")]
-		public Department Department { get; set; }
-
-		[ForeignKey("LocationId")]
-		public Location Location { get; set; }
-
-		[ForeignKey("StatusId")]
-		public Status Status { get; set; }
 	}
 }

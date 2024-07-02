@@ -30,28 +30,5 @@ namespace Techprimelab.Models
 
 		public int StatusId { get; set; }
 
-		/*[ForeignKey("ReasonId")]
-		public Reason Reason { get; set; }
-
-		[ForeignKey("TypeId")]
-		public Types Types { get; set; }
-
-		[ForeignKey("DivisionId")]
-		public Division Division { get; set; }
-
-		[ForeignKey("CategoryId")]
-		public Category Category { get; set; }
-
-		[ForeignKey("PriorityId")]
-		public Priority Priority { get; set; }
-
-		[ForeignKey("DepartmentId")]
-		public Department Department { get; set; }
-
-		[ForeignKey("LocationId")]
-		public Location Location { get; set; }
-
-		[ForeignKey("StatusId")]
-		public Status Status { get; set; }*/
 	}
 }

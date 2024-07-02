@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System;
 using Techprimelab.Data;
 using Techprimelab.Models;
+using Techprimelab.Models.DTO;
 using Techprimelab.Repository.Interfaces;
 
 namespace Techprimelab.Repository
@@ -38,6 +41,51 @@ namespace Techprimelab.Repository
 				.Include(p => p.Status)
 				.Include(p => p.Types)
 				.ToList();*/
+		}
+
+		public IEnumerable<ProjectDto> GetAllProjectsDto()
+		{
+			var projectDto = (from pro in _context.Projects
+							  join c in _context.Categories on pro.CategoryId equals c.CategoryId 
+
+							  join dp in _context.Departments on pro.DepartmentId equals dp.DepartmentId 
+
+							  join di in _context.Divisions on pro.DivisionId equals di.DivisionId 
+
+							  join lo in _context.Locations on pro.LocationId equals lo.LocationId 
+
+							  join pi in _context.Priorities on pro.PriorityId equals pi.PriorityId 
+
+							  join re in _context.Reasons on pro.ReasonId equals re.ReasonId
+
+							  join st in _context.Statuses on pro.StatusId equals st.StatusId 
+
+							  join tp in _context.Types on pro.TypeId equals tp.TypeId 
+
+							  select new ProjectDto
+							  {
+								  ProjectId = pro.ProjectId,
+								  ProjectName = pro.ProjectName,
+								  StartDate = pro.StartDate,
+								  EndDate = pro.EndDate,
+								  ReasonName = re.ReasonName,
+								  ReasonId = re.ReasonId,
+								  TypeName = tp.TypeName,
+								  TypeId = tp.TypeId,
+								  DivisionName = di.DivisionName,
+								  DivisionId = di.DivisionId,
+								  CategoryName = c.CategoryName,
+								  CategoryId = c.CategoryId,
+								  PriorityName = pi.PriorityName,
+								  PriorityId = pi.PriorityId,
+								  DepartmentName = dp.DepartmentName,
+								  DepartmentId = dp.DepartmentId,
+								  LocationName = lo.LocationName,
+								  LocationId = lo.LocationId,
+								  StatusName = st.StatusName,
+								  StatusId = st.StatusId
+							  }).ToList();
+			return projectDto; 
 		}
 
 		public int UpdateProject(Project project)
@@ -106,35 +154,29 @@ namespace Techprimelab.Repository
 
 /*var projectDto = (from pro in _context.Projects
 							   join c in _context.Categories on pro.CategoryId equals c.CategoryId into categoryGroup
-							   from cat in categoryGroup.DefaultIfEmpty()
+							 
 							   join dp in _context.Departments on pro.DepartmentId equals dp.DepartmentId into departmentGroup
-							   from dept in departmentGroup.DefaultIfEmpty()
+							  
 							   join di in _context.Divisions on pro.DivisionId equals di.DivisionId into divisionGroup
-							   from div in divisionGroup.DefaultIfEmpty()
+							 
 							   join lo in _context.Locations on pro.LocationId equals lo.LocationId into locationGroup
-							   from loc in locationGroup.DefaultIfEmpty()
+							 
 							   join pi in _context.Priorities on pro.PriorityId equals pi.PriorityId into priorityGroup
-							   from pri in priorityGroup.DefaultIfEmpty()
+							  
 							   join re in _context.Reasons on pro.ReasonId equals re.ReasonId into reasonGroup
-							   from rea in reasonGroup.DefaultIfEmpty()
+							
 							   join st in _context.Statuses on pro.StatusId equals st.StatusId into statusGroup
-							   from stat in statusGroup.DefaultIfEmpty()
+							 
 							   join tp in _context.Types on pro.TypeId equals tp.TypeId into typeGroup
-							   from typ in typeGroup.DefaultIfEmpty()
+							 
 							   select new ProjectDto
 							   {
 								   ProjectId = pro.ProjectId,
 								   ProjectName = pro.ProjectName,
-								   ReasonId = pro.ReasonId,
-								   TypeId = pro.TypeId,
-								   DivisionId = pro.DivisionId,
-								   CategoryId = pro.CategoryId,
-								   PriorityId = pro.PriorityId,
-								   DepartmentId = pro.DepartmentId,
-								   LocationId = pro.LocationId,
+								 
 								   StartDate = pro.StartDate,
 								   EndDate = pro.EndDate,
-								   StatusId = pro.StatusId,
+								  
 								   Reason = rea,
 								   Types = typ,
 								   Division = div,

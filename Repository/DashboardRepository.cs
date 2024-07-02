@@ -15,63 +15,59 @@ namespace Techprimelab.Repository
 			_context = context;
 		}
 
-		//Total projects
-		public async Task<int> GetTotalProjectsCountAsync()
+
+		public int GetTotalProjectsCount()
 		{
-			return await _context.Projects.CountAsync();
+			return _context.Projects.Count();
 		}
 
-		// Get: Count of project by status name 
-		public async Task<int> GetCountProjectsByStatusNameAsync(string statusName)
+		public int GetCountProjectsByStatusName(string statusName)
 		{
-			var statusId = await _context.Statuses
+			var statusId =  _context.Statuses
 				.Where(s => s.StatusName == statusName)
 				.Select(s => s.StatusId)
-				.SingleOrDefaultAsync();
+				.SingleOrDefault();
 
-			return await _context.Projects.CountAsync(p => p.StatusId == statusId);
+			return _context.Projects.Count(p => p.StatusId == statusId);
 		}
 
-
-		//Total projects where the status is Running and
-		//the end date is less than todays date
-		public async Task<int> GetDelayedProjectsCountAsync()
+		public int GetDelayedProjectsCount()
 		{
-			return await _context.Projects
-				.CountAsync(p => p.StatusId == _context.Statuses
-				.SingleOrDefault(s => s.StatusName == "Running")
-				.StatusId && p.EndDate < DateTime.Now);
+			return _context.Projects
+			.Count(p => p.StatusId == _context.Statuses
+			.SingleOrDefault(s => s.StatusName == "Running")
+			.StatusId && p.EndDate < DateTime.Now);
 		}
 
-		public async Task<List<DepartmentSuccessDto>> GetChartDataAsync()
+		public List<DepartmentSuccessDto> GetChartData()
 		{
-			var closedStatusId = await _context.Statuses
-	   .Where(s => s.StatusName == "Closed")
-	   .Select(s => s.StatusId)
-	   .SingleOrDefaultAsync();
+			var closedStatusId = _context.Statuses
+				   .Where(s => s.StatusName == "Closed")
+				   .Select(s => s.StatusId)
+				   .SingleOrDefault();
 
-			var departmentSuccessData = await _context.Projects
-		.GroupBy(p => p.DepartmentId)
-		.Select(g => new
-		{
-			DepartmentId = g.Key,
-			TotalProjects = g.Count(),
-			TotalProjectsClosed = g.Count(p => p.StatusId == closedStatusId),
-			SuccessPercentage = g.Count(p => p.StatusId == closedStatusId) * 100.0 / g.Count()
-		})
-		.Join(_context.Departments, 
-			projectGroup => projectGroup.DepartmentId,
-			department => department.DepartmentId, 
-			(projectGroup, department) => new DepartmentSuccessDto
-			{
-				DepartmentName = department.DepartmentName,
-				TotalProjects = projectGroup.TotalProjects,
-				TotalProjectsClosed = projectGroup.TotalProjectsClosed,
-				SuccessPercentage = projectGroup.SuccessPercentage
-			})
-		.ToListAsync();
+			var departmentSuccessData = _context.Projects
+				.GroupBy(p => p.DepartmentId)
+				.Select(g => new
+				{
+					DepartmentId = g.Key,
+					TotalProjects = g.Count(),
+					TotalProjectsClosed = g.Count(p => p.StatusId == closedStatusId),
+					Percentage = g.Count(p => p.StatusId == closedStatusId) * 100.0 / g.Count()
+				})
+				.Join(_context.Departments,
+					projectGroup => projectGroup.DepartmentId,
+					department => department.DepartmentId,
+					(projectGroup, department) => new DepartmentSuccessDto
+					{
+						DepartmentName = department.DepartmentName,
+						TotalProjects = projectGroup.TotalProjects,
+						TotalProjectsClosed = projectGroup.TotalProjectsClosed,
+						Percentage = projectGroup.Percentage
+					})
+				.ToList();
+
 			return departmentSuccessData;
 		}
-
 	}
 }

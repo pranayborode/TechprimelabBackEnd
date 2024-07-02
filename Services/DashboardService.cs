@@ -14,26 +14,26 @@
 				_dashboardRepository = dashboardRepository;
 			}
 
-			public async Task<int> GetTotalProjectsCountAsync()
-			{
-				return await _dashboardRepository.GetTotalProjectsCountAsync();
-			}
-		
+			
 
-			public async Task<int> GetCountProjectsByStatusNameAsync(string statusName)
-			{
-				return await _dashboardRepository.GetCountProjectsByStatusNameAsync(statusName);
-			}
-
-			public async Task<int> GetDelayedProjectsCountAsync()
-			{
-				return await _dashboardRepository.GetDelayedProjectsCountAsync();
-			}
-
-		
-			public async Task<List<DepartmentSuccessDto>> GetChartDataAsync()
-			{
-				return await _dashboardRepository.GetChartDataAsync();
-			}
+		public int GetTotalProjectsCount()
+		{
+			return _dashboardRepository.GetTotalProjectsCount();
 		}
+
+		public int GetCountProjectsByStatusName(string statusName)
+		{
+			return _dashboardRepository.GetCountProjectsByStatusName(statusName);
+		}
+
+		public int GetDelayedProjectsCount()
+		{
+			return _dashboardRepository.GetDelayedProjectsCount();
+		}
+
+		public List<DepartmentSuccessDto> GetChartData()
+		{
+			return _dashboardRepository.GetChartData();
+		}
+	}
 	}

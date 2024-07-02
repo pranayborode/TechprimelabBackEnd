@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Techprimelab.Models
 {
+	[Table("Categories")]
 	public class Category
 	{
 		[Key]

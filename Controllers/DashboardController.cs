@@ -19,11 +19,11 @@ namespace Techprimelab.Controllers
 
 		[HttpGet]
 		[Route("TotalProjects")]
-		public async Task<IActionResult> GetToatalProjectsCount()
+		public IActionResult GetToatalProjectsCount()
 		{
 			try
 			{
-				var count = await _dashboardService.GetTotalProjectsCountAsync();
+				var count =  _dashboardService.GetTotalProjectsCount();
 				return Ok(count);
 			}
 			catch (Exception ex)
@@ -34,11 +34,11 @@ namespace Techprimelab.Controllers
 
 		[HttpGet]
 		[Route("CountByStatusName/{statusName}")]
-		public async Task<IActionResult> CountProjectsByStatusName(string statusName)
+		public IActionResult CountProjectsByStatusName(string statusName)
 		{
 			try
 			{
-				var count = await _dashboardService.GetCountProjectsByStatusNameAsync(statusName);
+				var count =  _dashboardService.GetCountProjectsByStatusName(statusName);
 				return Ok(count);
 			}
 			catch (Exception ex)
@@ -49,11 +49,11 @@ namespace Techprimelab.Controllers
 
 		[HttpGet]
 		[Route("DelayedProjectsCount")]
-		public async Task<IActionResult> GetDelayedProjectsCount()
+		public IActionResult GetDelayedProjectsCount()
 		{
 			try
 			{
-				var count = await _dashboardService.GetDelayedProjectsCountAsync();
+				var count = _dashboardService.GetDelayedProjectsCount();
 				return Ok(count);
 			}
 			catch (Exception ex)
@@ -61,14 +61,13 @@ namespace Techprimelab.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, ex);
 			}
 		}
-
 		
 
 		[HttpGet]
 		[Route("ChartData")]
-		public async Task<ActionResult<IEnumerable<DepartmentSuccessDto>>> GetDepartmentSuccess()
+		public ActionResult<IEnumerable<DepartmentSuccessDto>>GetChartData()
 		{
-			var departmentSuccessData = await _dashboardService.GetChartDataAsync();
+			var departmentSuccessData =  _dashboardService.GetChartData();
 			return Ok(departmentSuccessData);
 		}
 

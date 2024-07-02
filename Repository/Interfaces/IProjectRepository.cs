@@ -1,4 +1,5 @@
 ﻿using Techprimelab.Models;
+using Techprimelab.Models.DTO;
 
 
 namespace Techprimelab.Repository.Interfaces
@@ -21,6 +22,8 @@ namespace Techprimelab.Repository.Interfaces
 		IEnumerable<Types> GetAllTypes();
 
 		IEnumerable<Reason> getAllReasons();
+
+		public IEnumerable<ProjectDto> GetAllProjectsDto();
 
 	}
 }
